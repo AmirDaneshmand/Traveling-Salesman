@@ -1,21 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 
+public class Menu extends JFrame implements ActionListener, MouseListener {
+        private JPanel centerPnl,topPnl,botPnl, secondCenterPnl;
 
-
-    public class Menu extends JFrame implements ActionListener {
-        private JPanel centerPnl,topPnl,botPnl,secondCentrelPnl;
         private JButton startGameBtn, twoPlayerBtn,onePlayerBtn;
         private JButton bakcBtn,exitBtn;
         private Font CormorantFont = new Font("Cormorant",Font.ITALIC,12);
         private Font AlegreyaFont = new Font("Alegreya",Font.BOLD,34);
         public Icon exitIcn = new ImageIcon("close-icon-11.png");
 
+        private boolean secondMenuShow = true;
 
         public JLabel StartMenuPng1 = new JLabel(new ImageIcon("StartMenu.png"));
         public JLabel StartMenuPng2 = new JLabel(new ImageIcon("StartMenu1.png"));
@@ -49,10 +46,12 @@ import java.awt.event.WindowEvent;
                 }
             });
 
-
+           // initSecondMenu();
+            //secondCenterPnl.setVisible(secondMenuShow);
             initCenterPanel();
             initTopPanel();
             initBotPnl();
+
 
 
             setResizable(false);
@@ -83,25 +82,38 @@ import java.awt.event.WindowEvent;
 
 
             StartMenuPng1.setBounds(0,0,1270,790);
-            centerPnl.add(StartMenuPng1);
 
 
 
             startGameBtn = new JButton("New Game");
             startGameBtn.setBounds(800,150,430,60);
             startGameBtn.setFont(AlegreyaFont);
-            centerPnl.add(startGameBtn);
-            startGameBtn.setFocusable(false);
+            startGameBtn.setBackground(new Color(0xBDB4AC56, true));
+            startGameBtn.setForeground(new Color(219, 252, 3));
+            startGameBtn.setBorder(null);
+            startGameBtn.setBorderPainted(false);
+            startGameBtn.setSelected(false);
             startGameBtn.addActionListener(this);
+            startGameBtn.addMouseListener(this);
+
+
 
             exitBtn = new JButton("Exit");
             exitBtn.setBounds(800,300,430,60);
             exitBtn.setFont(AlegreyaFont);
-            centerPnl.add(exitBtn);
-            exitBtn.setFocusable(false);
+            exitBtn.setForeground(new Color(219, 252, 3));
+            exitBtn.setBackground(new Color(0xBDB4AC56, true));
+            exitBtn.setBorder(null);
+            exitBtn.setBorderPainted(false);
+            exitBtn.setSelected(false);
             exitBtn.addActionListener(this);
+            exitBtn.addMouseListener(this);
 
 
+
+            centerPnl.add(StartMenuPng1);
+            centerPnl.add(startGameBtn);
+            centerPnl.add(exitBtn);
 
             add(centerPnl,BorderLayout.CENTER);
 
@@ -109,48 +121,71 @@ import java.awt.event.WindowEvent;
         }
 
         private void initSecondMenu(){
-            secondCentrelPnl = new JPanel(null);
+            secondCenterPnl = new JPanel(null);
 
 
             twoPlayerBtn = new JButton("two Players");
-            twoPlayerBtn.setBounds(800,150,430,60);
             twoPlayerBtn.setFont(AlegreyaFont);
+            twoPlayerBtn.setBackground(new Color(0xBDB4AC56, true));
+            twoPlayerBtn.setForeground(new Color(219, 252, 3));
+            twoPlayerBtn.setBorder(null);
+            twoPlayerBtn.setBorderPainted(false);
+            twoPlayerBtn.setBounds(800,150,430,60);
+            twoPlayerBtn.setSelected(false);
             twoPlayerBtn.addActionListener(this);
-            twoPlayerBtn.setFocusable(false);
+            twoPlayerBtn.addMouseListener(this);
+
+
 
 
             onePlayerBtn = new JButton("one Player");
-            onePlayerBtn.setBounds(800,250,430,60);
             onePlayerBtn.setFont(AlegreyaFont);
+            onePlayerBtn.setBackground(new Color(0xBDB4AC56, true));
+            onePlayerBtn.setForeground(new Color(219, 252, 3));
+            onePlayerBtn.setBorder(null);
+            onePlayerBtn.setBorderPainted(false);
+            onePlayerBtn.setBounds(800,250,430,60);
+            onePlayerBtn.setSelected(false);
             onePlayerBtn.addActionListener(this);
-            onePlayerBtn.setFocusable(false);
+            onePlayerBtn.addMouseListener(this);
+
+
 
 
             bakcBtn = new JButton("Back");
-            bakcBtn.setBounds(800,350,430,60);
             bakcBtn.setFont(AlegreyaFont);
+            bakcBtn.setBackground(new Color(0xBDB4AC56, true));
+            bakcBtn.setForeground(new Color(219, 252, 3));
+            bakcBtn.setBorder(null);
+            bakcBtn.setBorderPainted(false);
+            bakcBtn.setBounds(800,350,430,60);
+            bakcBtn.setSelected(false);
             bakcBtn.addActionListener(this);
-            bakcBtn.setFocusable(false);
+            bakcBtn.addMouseListener(this);
 
             StartMenuPng1.setBounds(0,0,1270,790);
-            secondCentrelPnl.add(StartMenuPng1);
-            secondCentrelPnl.add(bakcBtn);
-            secondCentrelPnl.add(onePlayerBtn);
-            secondCentrelPnl.add(twoPlayerBtn);
-            secondCentrelPnl.setFocusable(false);
+            secondCenterPnl.add(StartMenuPng1);
+            secondCenterPnl.add(bakcBtn);
+            secondCenterPnl.add(onePlayerBtn);
+            secondCenterPnl.add(twoPlayerBtn);
 
-            add(secondCentrelPnl,BorderLayout.CENTER);
+
+
+            add(secondCenterPnl,BorderLayout.CENTER);
         }
 
 
-        public void setListener(Listener listener) {
-            this.listener = listener;
-        }
 
         public void actionPerformed(ActionEvent e) {
             if(e.getSource().equals(startGameBtn)){
+                if(secondMenuShow){
+                    initSecondMenu();
+                    secondMenuShow = false;
+                }else{
+                    secondCenterPnl.setVisible(true);
+                }
                 centerPnl.setVisible(false);
-                initSecondMenu();
+                secondCenterPnl.add(StartMenuPng1);
 
             }
             if(e.getSource().equals(exitBtn)){
@@ -172,8 +207,9 @@ import java.awt.event.WindowEvent;
 
             if(e.getSource().equals(bakcBtn)){
 
-                secondCentrelPnl.setVisible(false);
-                initCenterPanel();
+                secondCenterPnl.setVisible(false);
+                centerPnl.setVisible(true);
+                centerPnl.add(StartMenuPng1);
 
             }
 
@@ -204,7 +240,78 @@ import java.awt.event.WindowEvent;
         }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource().equals(twoPlayerBtn)){
+            twoPlayerBtn.setForeground(new Color(122, 1, 17));
+            twoPlayerBtn.setBackground(new Color(0x964C8379, true));
+        }
+        if(e.getSource().equals(onePlayerBtn)){
+            onePlayerBtn.setForeground(new Color(215, 105, 155));
+            onePlayerBtn.setBackground(new Color(0x964C8379, true));
+
+        }
+        if(e.getSource().equals(bakcBtn)){
+            bakcBtn.setForeground(new Color(75, 201, 57));
+            bakcBtn.setBackground(new Color(0x964C8379, true));
+
+        }
+        if(e.getSource().equals(startGameBtn)){
+            startGameBtn.setForeground(new Color(217, 111, 8));
+            startGameBtn.setBackground(new Color(0x964C8379, true));
+
+        }
+        if(e.getSource().equals(exitBtn)){
+            exitBtn.setForeground(new Color(4, 207, 222));
+            exitBtn.setBackground(new Color(0x964C8379, true));
+
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource().equals(twoPlayerBtn)){
+            twoPlayerBtn.setForeground(new Color(220,250,4));
+            twoPlayerBtn.setBackground(new Color(0xBDB4AC56, true));
+
+        }
+        if(e.getSource().equals(onePlayerBtn)){
+            onePlayerBtn.setForeground(new Color(220,250,4));
+            onePlayerBtn.setBackground(new Color(0xBDB4AC56, true));
+
+        }
+        if(e.getSource().equals(bakcBtn)){
+            bakcBtn.setForeground(new Color(220,250,4));
+            bakcBtn.setBackground(new Color(0xBDB4AC56, true));
+
+        }
+        if(e.getSource().equals(startGameBtn)){
+            startGameBtn.setForeground(new Color(220,250,4));
+            startGameBtn.setBackground(new Color(0xBDB4AC56, true));
+
+        }
+        if(e.getSource().equals(exitBtn)){
+            exitBtn.setForeground(new Color(220,250,4));
+            exitBtn.setBackground(new Color(0xBDB4AC56, true));
+
+        }
+    }
+}
 
 
 

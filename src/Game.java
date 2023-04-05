@@ -1,17 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-public class Game extends JFrame {
+public class Game extends JFrame implements ActionListener{
     GameBoard board;
     private Game me;
     private int cellSize;
     private int topMargin,leftMargin;
+    public Image castleIcn = new ImageIcon("castle.png").getImage();
+
 
     public static JButton backBtnGame;
+    random_number diceRand = new random_number();
 
     Image backImg = new ImageIcon("backGround3.png").getImage();
     Image exitImg = new ImageIcon("close-icon-11").getImage();
@@ -64,6 +64,13 @@ public class Game extends JFrame {
         backBtnGame.setText("Back");
         backBtnGame.setBounds(17,10,95,42);
         add(backBtnGame);
+        backBtnGame.addActionListener(this);
+
+
+
+
+
+
     }
 
     public void initTable() {
@@ -89,6 +96,7 @@ public class Game extends JFrame {
 
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(backImg,0,0,null);
+        g2.drawImage(castleIcn,800,380,60,60,null);
         g2.setStroke(new BasicStroke(3));
         g2.setColor(Color.lightGray);
         for (int i = 0;i<11;i++){
@@ -109,4 +117,22 @@ public class Game extends JFrame {
         GameBoard gameBoard = new GameBoard();
         new Game(gameBoard);
     }
-}
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(backBtnGame)){
+
+            int a= JOptionPane.showConfirmDialog(me,
+                    "Are you sure??"
+                    , "Exit"
+                    ,JOptionPane.YES_NO_OPTION
+                    ,JOptionPane.QUESTION_MESSAGE
+            );
+            if(a==JOptionPane.YES_OPTION){
+                setVisible(false);
+                new Menu();
+            }
+        }
+        }
+    }
+
